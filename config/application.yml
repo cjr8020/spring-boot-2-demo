@@ -20,6 +20,7 @@ server:
 # ----------------------------------
 oauth:
   signingKey: <your-signing-key-here>
+#  signingKey: ENC(bcsQOWFeRelG3m/KViWoTNwfa/iPCmf0wyWk3EMDScM=)
 
 
 # ---------------------------------------------
@@ -45,44 +46,6 @@ management:
 #management.endpoints.web.base-path: /manage
 #management.endpoints.web.exposure.include: "*"
 
-
-#managment:
-#  server:
-#    port: 8081
-#    address: "127.0.0.1"
-#  endpoints:
-#    web:
-#      base-path: /manage
-#      exposure:
-#        include: health,info
-#    jmx:
-#      exposure:
-#        exclude: "*"
-
-#endpoints:
-#  enabled: true
-#  health:
-#    enabled: true
-#  info:
-#    enabled: true
-#
-#management:
-#  context-path: /actuator
-#  server:
-#    port: 8081
-#  security:
-#    enabled: true
-#    role: ACTUATOR
-#    user:
-#      name: monitor
-#      password: secret
-#  health:
-#    diskspace:
-#      enabled: true
-#    db:
-#      enabled: true
-#    jms:
-#      enabled: false
 
 # ---------------------
 # Jackson configuration
