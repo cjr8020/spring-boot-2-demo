@@ -1,0 +1,134 @@
+# ================================================================================================
+# Spring property load order is:
+# 1. A /config subdirectory of the current directory.
+# 2. The current directory
+# 3. A classpath /config package
+# 4. The classpath root
+#
+# When multiple `application.yml` are found in above locations,
+# duplicate properties will be merged.
+# =================================================================================================
+
+# ----------------------------------
+# application endpoint configuration
+# ----------------------------------
+server:
+  port: 8080
+
+# ----------------------------------
+# OAuth2/JWT properties
+# ----------------------------------
+oauth:
+  signingKey: <your-signing-key-here>
+
+
+# ---------------------------------------------
+# management endpoint configuration
+# ---------------------------------------------
+
+management:
+  server:
+    port: 8081
+    address: 127.0.0.1
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info
+  security:
+    user:
+      name: monitor
+      password: secret
+
+#management.server.port: 8081
+#management.server.address: 127.0.0.1
+#management.endpoints.web.base-path: /manage
+#management.endpoints.web.exposure.include: "*"
+
+
+#managment:
+#  server:
+#    port: 8081
+#    address: "127.0.0.1"
+#  endpoints:
+#    web:
+#      base-path: /manage
+#      exposure:
+#        include: health,info
+#    jmx:
+#      exposure:
+#        exclude: "*"
+
+#endpoints:
+#  enabled: true
+#  health:
+#    enabled: true
+#  info:
+#    enabled: true
+#
+#management:
+#  context-path: /actuator
+#  server:
+#    port: 8081
+#  security:
+#    enabled: true
+#    role: ACTUATOR
+#    user:
+#      name: monitor
+#      password: secret
+#  health:
+#    diskspace:
+#      enabled: true
+#    db:
+#      enabled: true
+#    jms:
+#      enabled: false
+
+# ---------------------
+# Jackson configuration
+# ---------------------
+spring.jackson.serialization.indent_output: true
+spring.jackson.serialization.write_dates_as_timestamps: false
+
+# -------------------------------------------------------------
+# jasypt resolves the password from system environment variable
+# -------------------------------------------------------------x`
+jasypt:
+  encryptor:
+    password: masterhelloworldpassword
+
+
+# NOTE: This configuration is for embedded H2 database for this sample application
+#   which does not access the operational database such as Oracle. Test cases
+#   must use this database configuration
+
+# --------------------------
+# Application Configuration
+# --------------------------
+spring:
+  datasource:
+     # note: `spring.datasource.*` properties are completely IGNORED by the `EmbeddedDatabaseBuilder`.
+     # see DatasourceConfiguration..
+#     url: "jdbc:h2:mem:testdb;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+#     username: sa
+#     password:
+#     driverClassName: org.h2.Driver
+#     platform: h2
+#     initialize: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+
+
+# Logging
+logging:
+  file: logs/spring-boot-2-demo.log
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(18971){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+    file: "[%d] [%-5level] [%thread] [%logger] - [%msg]%n"
+  level:
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+    com.standard: INFO
