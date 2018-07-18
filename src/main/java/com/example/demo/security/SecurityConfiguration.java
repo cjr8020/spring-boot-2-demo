@@ -163,9 +163,10 @@ public class SecurityConfiguration {
     }
   }
 
-  @Configuration
-  @EnableResourceServer
-  @EnableGlobalMethodSecurity(prePostEnabled = true)
+  // TODO: disable resource server
+//  @Configuration
+//  @EnableResourceServer
+//  @EnableGlobalMethodSecurity(prePostEnabled = true)
   public static class OAuthResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Autowired

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+
+  <property
+    name="LOG_FILE"
+    value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}unit-test.log}" />
+
+  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+  <!-- Send debug messages to System.out -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- By default, encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS}  - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender" >
+    <file>${LOG_FILE}</file>
+  </appender>
+
+  <root level="warn">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+  <logger name="org.springframework.web" level="ERROR"/>
+</configuration>

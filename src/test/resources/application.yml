@@ -1,0 +1,31 @@
+
+# Database Configuration
+#
+# NOTE: For unit testing, it is expected that your test classes
+#   uses an embedded database (ex. H2) instead of accessing the
+#   real database like Oracle.
+#
+# NOTE: This configuration is for embedded H2 database.
+spring:
+   datasource:
+     # note: `spring.datasource.*` properties are completely IGNORED by the `EmbeddedDatabaseBuilder`.
+     # see DatasourceConfiguration..
+#     url: "jdbc:h2:mem:TEST-DB;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+#     username: sa
+#     password:
+#     driver-class-name: org.h2.Driver
+#     platform: h2
+#     initialize: true
+   jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+   h2:
+     console:
+       enabled: false
+
+# Logging
+logging:
+  file: logs/unit-test.log
