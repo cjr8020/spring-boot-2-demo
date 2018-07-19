@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -30,10 +28,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 
 
 /**
- * Provides overall Security configuration for a typical SpringBoot
- * microservice by implementing the following:
- * 1. management (actuator) endpoint is secured with  Basic Authentication.
- * 2. application endpoint resources are secured with OAuth2/JWT-based authentication.
+ * Provides overall Security configuration for a typical SpringBoot microservice by implementing the
+ * following: 1. management (actuator) endpoint is secured with  Basic Authentication. 2.
+ * application endpoint resources are secured with OAuth2/JWT-based authentication.
  */
 @Configuration
 @EnableWebSecurity
@@ -53,14 +50,15 @@ public class SecurityConfiguration {
 
   /**
    * Actuator Security Config.
-   * Important: this configuration load order is higher than the default of 100,
-   * and is also higher than the Resource Server Config with the wild card pattern
-   * matching.  This order allows us to match any actuator requests first and
-   * apply system user basic auth to those requests.
+   *
+   * Important: this configuration load order is higher than the default
+   * of 100, and is also higher than the Resource Server Config with the wild card pattern matching.
+   * This order allows us to match any actuator requests first and apply system user basic auth to
+   * those requests.
+   *
    * For all other requests a higher order Resource Server configuration with its
-   * wild card pattern matching will pick up all other requests.
-   * The reason the order number is not 0 or 1 is to leave room for projects to create
-   * higher order adapters if needed.
+   * wild card pattern matching will pick up all other requests. The reason the order number is not
+   * 0 or 1 is to leave room for projects to create higher order adapters if needed.
    */
   @Order(1)
   @Configuration
@@ -101,7 +99,7 @@ public class SecurityConfiguration {
     manager.createUser(
         User
             .withUsername(actuatorUserName)
-            .password("{noop}"+actuatorUserPassword)
+            .password("{noop}" + actuatorUserPassword)
             .roles(ACTUATOR_SECURITY_ROLE)
             .build()
     );
@@ -117,6 +115,7 @@ public class SecurityConfiguration {
 
   /**
    * JWT token converter allows us to apply our signing key to enable token validation.
+   *
    * @return JwtAccessTokenConverter token converter
    */
   @Bean
@@ -129,6 +128,7 @@ public class SecurityConfiguration {
 
   /**
    * Token store with our JWT token converter.
+   *
    * @return TokenStore
    */
   @Bean
@@ -138,6 +138,7 @@ public class SecurityConfiguration {
 
   /**
    * Resource Server Tokens Services with our TokenStore injected.
+   *
    * @return ResourceServerTokenServices
    */
   @Bean
@@ -149,8 +150,8 @@ public class SecurityConfiguration {
   }
 
   /**
-   * JWT Converter whose primary purpose is to copy JWT content into
-   * OAuth2Authentication enabling access to JWT claims and other details.
+   * JWT Converter whose primary purpose is to copy JWT content into OAuth2Authentication enabling
+   * access to JWT claims and other details.
    */
   public static class JwtConverter
       extends DefaultAccessTokenConverter {
@@ -202,7 +203,6 @@ public class SecurityConfiguration {
     }
 
   }
-
 
 
 }
