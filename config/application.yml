@@ -68,21 +68,32 @@ jasypt:
 # --------------------------
 # Application Configuration
 # --------------------------
-spring:
-  datasource:
-     # note: `spring.datasource.*` properties are completely IGNORED by the `EmbeddedDatabaseBuilder`.
-     # see DatasourceConfiguration..
+
+# note: `spring.datasource.*` properties are completely IGNORED by the `EmbeddedDatabaseBuilder`.
+# see DatasourceConfiguration..
 #     url: "jdbc:h2:mem:testdb;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
 #     username: sa
 #     password:
 #     driverClassName: org.h2.Driver
 #     platform: h2
 #     initialize: true
-  jpa:
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate.dialect: org.hibernate.dialect.H2Dialect
+
+# db1
+#app.datasource.db1.url = [url]
+#app.datasource.db1.username = [username]
+#app.datasource.db1.password = [password]
+#app.datasource.db1.driverClassName = oracle.jdbc.OracleDriver
+#app.datasource.db1.type=com.zaxxer.hikari.HikariDataSource # either here or in code
+
+app:
+  datasource:
+    db1:
+      url: jdbc:h2:mem:demodb;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      username: sa
+      password:
+      type: com.zaxxer.hikari.HikariDataSource
+
+
 
 
 # Logging

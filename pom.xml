@@ -30,15 +30,31 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
+    <jaxb.version>2.3.0</jaxb.version>
+
     <spring-security-oauth2.version>2.3.3.RELEASE</spring-security-oauth2.version>
     <spring-security-jwt.version>1.0.9.RELEASE</spring-security-jwt.version>
     <jasypt-spring-boot-starter.version>1.17</jasypt-spring-boot-starter.version>
 
     <jdbi3.version>3.3.0</jdbi3.version>
+    <h2.version>1.4.197</h2.version>
+
+    <guava.version>25.1-jre</guava.version>
+
+
   </properties>
 
   <dependencies>
+
     <!-- runtime -->
+
+    <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>${jaxb.version}</version>
+    </dependency>
+
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -47,6 +63,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
     </dependency>
 
     <!-- Add artifact needed for actuator -->
@@ -81,10 +104,17 @@
     </dependency>
 
     <!-- data access support -->
-    <!--<dependency>-->
-      <!--<groupId>org.springframework.boot</groupId>-->
-      <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2.version}</version>
+      <!--<scope>test</scope>-->
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.jdbi/jdbi3-core -->
     <dependency>
@@ -96,6 +126,11 @@
     <dependency>
       <groupId>org.jdbi</groupId>
       <artifactId>jdbi3-stringtemplate4</artifactId>
+      <version>${jdbi3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jdbi</groupId>
+      <artifactId>jdbi3-sqlobject</artifactId>
       <version>${jdbi3.version}</version>
     </dependency>
 

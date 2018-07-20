@@ -50,12 +50,10 @@ public class SecurityConfiguration {
 
   /**
    * Actuator Security Config.
-   *
    * Important: this configuration load order is higher than the default
    * of 100, and is also higher than the Resource Server Config with the wild card pattern matching.
    * This order allows us to match any actuator requests first and apply system user basic auth to
    * those requests.
-   *
    * For all other requests a higher order Resource Server configuration with its
    * wild card pattern matching will pick up all other requests. The reason the order number is not
    * 0 or 1 is to leave room for projects to create higher order adapters if needed.
