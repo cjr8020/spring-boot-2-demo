@@ -1,34 +1,19 @@
 package com.example.demo.da;
 
+import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 @Configuration
 public class DatabaseConfiguration {
-
-
-  /**
-   * DB1 datasource.
-   *
-   * @return DataSource
-   */
-  @Bean
-  @Primary
-  public DataSource dataSource() {
-    return (new EmbeddedDatabaseBuilder()
-        .setType(EmbeddedDatabaseType.H2)
-        .setName("demodb;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;")
-        .addScript("classpath:db/dropcreate.sql")
-        .addScript("classpath:db/initdata.sql")
-    ).build();
-  }
 
 
   /**
@@ -45,6 +30,23 @@ public class DatabaseConfiguration {
       jdbi.installPlugin(new SqlObjectPlugin());
       return jdbi;
     }
+  }
+
+
+  @Bean
+  @Primary
+  @ConfigurationProperties(prefix = "spring.datasource")
+  public DataSource dataSource() {
+    return DataSourceBuilder.create().build();
+  }
+
+  @Bean
+  @ConfigurationProperties("spring.datasource")
+  public HikariDataSource dataSource(DataSourceProperties properties) {
+    return properties
+        .initializeDataSourceBuilder()
+        .type(HikariDataSource.class)
+        .build();
   }
 
 //  @Bean

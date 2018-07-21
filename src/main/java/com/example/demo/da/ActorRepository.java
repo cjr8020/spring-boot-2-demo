@@ -6,7 +6,10 @@ import java.util.List;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +23,10 @@ public class ActorRepository {
     this.actorDao = jdbi.onDemand(ActorDao.class);
   }
 
+  public void create(Actor actor) {
+    actorDao.create(actor);
+  }
+
   public List<Actor> readAll() {
     return actorDao.readAll();
   }
@@ -30,13 +37,17 @@ public class ActorRepository {
 
 
   @RegisterRowMapper(ActorMapper.class)
-  public static abstract class ActorDao {
+  public  interface ActorDao {
 
-    @SqlQuery("SELECT * FROM DEMO.ACTOR WHERE actorId = :actorId")
-    abstract Actor read(@Bind("actorId") Long actorId);
+    @SqlUpdate("INSERT INTO DEMO.ACTOR (USERNAME, RESOURCES_REQUESTED, RECORD_VERSION, CREATED_BY, CREATED_TIMESTAMP) values (:username, :resourcesRequested, :recordVersion, :createdBy, :createdTimestamp)")
+    @GetGeneratedKeys
+    long create(@BindBean Actor actor);
+
+    @SqlQuery("SELECT * FROM DEMO.ACTOR WHERE ACTOR_ID = :actorId")
+    Actor read(@Bind("actorId") Long actorId);
 
     @SqlQuery("SELECT * from DEMO.ACTOR")
-    abstract List<Actor> readAll();
+    List<Actor> readAll();
 
   }
 

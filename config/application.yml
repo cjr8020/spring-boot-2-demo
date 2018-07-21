@@ -93,13 +93,12 @@ jasypt:
 #      password:
 #      type: com.zaxxer.hikari.HikariDataSource
 
-#spring:
-#  datasource:
-#    initialize: true
-#    url: jdbc:h2:mem:demodb;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-#    username: sa
-#    password:
-#    type: com.zaxxer.hikari.HikariDataSource
+spring:
+  datasource:
+#    initialization-mode: always  # no effect
+    url: jdbc:h2:mem:test;INIT=CREATE SCHEMA IF NOT EXISTS DEMO
+#  data: import.sql  # no effect
+
 
 # Logging
 logging:
