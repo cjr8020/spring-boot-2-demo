@@ -1,3 +1,6 @@
+
+DROP TABLE actor IF EXISTS;
+
 /*
  *  TABLE: DEMO.ACTOR
  */

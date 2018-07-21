@@ -85,16 +85,21 @@ jasypt:
 #app.datasource.db1.driverClassName = oracle.jdbc.OracleDriver
 #app.datasource.db1.type=com.zaxxer.hikari.HikariDataSource # either here or in code
 
-app:
-  datasource:
-    db1:
-      url: jdbc:h2:mem:demodb;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-      username: sa
-      password:
-      type: com.zaxxer.hikari.HikariDataSource
+#app:
+#  datasource:
+#    db1:
+#      url: jdbc:h2:mem:demodb;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#      username: sa
+#      password:
+#      type: com.zaxxer.hikari.HikariDataSource
 
-
-
+#spring:
+#  datasource:
+#    initialize: true
+#    url: jdbc:h2:mem:demodb;INIT=CREATE SCHEMA IF NOT EXISTS DEMO;MODE=Oracle;MV_STORE=FALSE;MVCC=FALSE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#    username: sa
+#    password:
+#    type: com.zaxxer.hikari.HikariDataSource
 
 # Logging
 logging:
@@ -105,4 +110,5 @@ logging:
   level:
     org.springframework.web: WARN
     org.springframework.security: WARN
-    com.standard: INFO
+    org.springframework.jdbc.datasource.init.ScriptUtils: DEBUG
+    org.jdbi: DEBUG
