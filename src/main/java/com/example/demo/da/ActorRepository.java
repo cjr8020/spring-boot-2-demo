@@ -3,6 +3,7 @@ package com.example.demo.da;
 import com.example.demo.da.dao.ActorDao;
 import com.example.demo.da.entity.Actor;
 import java.util.List;
+import java.util.Optional;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,8 +26,13 @@ public class ActorRepository {
     return actorDao.readAll();
   }
 
-  public Actor read(long actorId) {
-    return actorDao.read(actorId);
+  public Optional<Actor> read(long actorId) {
+    Actor actorById = actorDao.read(actorId);
+    if (actorById == null) {
+      return Optional.empty();
+    } else {
+      return Optional.of(actorById);
+    }
   }
 
 

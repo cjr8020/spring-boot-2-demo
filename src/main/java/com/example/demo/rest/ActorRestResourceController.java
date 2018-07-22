@@ -2,6 +2,7 @@ package com.example.demo.rest;
 
 import com.example.demo.da.ActorRepository;
 import com.example.demo.da.entity.Actor;
+import com.example.demo.exceptions.ResourceNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,20 +41,24 @@ public class ActorRestResourceController {
       value = "/actor/{id}",
       method = RequestMethod.GET
   )
-  public Optional<Actor> getActor(@PathVariable("id") long id) {
+  public Actor getActor(@PathVariable("id") long id) {
     logger.info(" -------- getActor(id) -------");
-    return Optional.of(actorRepository.read(id));
+    Optional<Actor> actorById = actorRepository.read(id);
+    if (actorById.isPresent()) {
+      return actorById.get();
+    } else {
+      throw new ResourceNotFoundException();
+    }
   }
+
 
 
   @RequestMapping(
       value = "/actor",
       method = RequestMethod.POST
   )
-  public void create() {
+  public void create(@RequestBody Actor actor) {
     logger.info(" -------- create() -------");
-    Actor actor = new Actor();
-    actor.setUsername("newactor");
     actor.setResourcesRequested(0);
     actor.setRecordVersion(0);
     actor.setCreatedBy("create-method");
